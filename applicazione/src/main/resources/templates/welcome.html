@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      
+      
+<body>
+
+ <a th:href="@{/}">home</a>
+
+<h2 th:text="#{welcome}">Welcome messaggio natural template</h2>
+
+ <a th:href="@{/welcome2}">/applicazione/welcome2</a>
+ 
+ <div sec:authorize="isAuthenticated()">
+  <div sec:authorize="hasRole('ROLE_ADMIN')">
+  sei admin
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+  sei user
+</div>
+<div >
+  This content is only shown to authenticated users.
+  </div>
+  <div >
+  <div th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</div>
+ </div>
+  
+</div>
+
+</body></html>
