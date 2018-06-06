@@ -9,6 +9,28 @@ logging:
   file: C:/dev/home/applicazione/myapplication.log
 
 
+spring:
+  mail:
+    host: mail.xxxxx.it
+    port: 587
+    username: a.xxxxxx@xxxxx.it
+    password: xxxxxx
+    properties:
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      
+
+configuration:
+  applicazione:
+    admin: admin
+    admin-pwd: aaaaaa
+    utenti:
+    - uuuu1/tgwtr/USER
+    - uuuu2/tgwtr/USER
+    destinatari:
+    - a.xxxxxx@xxxxx.it
+    - xxxxxxxo@hotmail.it
+
 spring.thymeleaf.mode: HTML
   
 server:
@@ -25,10 +47,5 @@ server:
   
 # Internationalization
 spring.messages.basename: messages/messages
-
-storage:
-  location: C:/dev/home/applicazione/storage/
-
-
 
  
