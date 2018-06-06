@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    
-    <body>
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<body>
+<div layout:fragment="content">
 
         
             <h2 th:text="#{logout}">You have been logged out.</h2>
-            
-            
-            
-             <a th:href="@{/}">home</a>
+			......................
              
              
-        
-    </body>
-</html>
+</div></body></html>

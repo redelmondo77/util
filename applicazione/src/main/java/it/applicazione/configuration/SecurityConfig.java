@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
@@ -39,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
             .authorizeRequests()
-				.antMatchers("/", "/home", "/resources/**", "/webjars/**"
+				.antMatchers("/", "/home", "/resources/**", "/welcome/**", "/webjars/**"
 						).permitAll()
 				.anyRequest()
 				.authenticated()
@@ -51,17 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 	
-	
-	
-	@Bean
-	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
-	    final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-	    templateEngine.setTemplateResolver(templateResolver);
-	    templateEngine.addDialect(sec); // Enable use of "sec"
-	    return templateEngine;
-	}
-	
-	
+
 	
 	@Bean
     @Override
