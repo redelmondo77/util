@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<body>
+<div layout:fragment="content">
+
+      
+<div >
+  <h1>Result</h1>
+    <p th:text="'id: ' + ${esperimento.id}" />
+    <p th:text="'info: : ' + ${esperimento.info}" />
+    <p th:text="'fase1: ' + ${esperimento.fase1}" />
+    <p th:text="'fase2: ' + ${esperimento.fase2}" />
+    <a th:href="@{/esperimento/new}">Submit another esperimento</a>
+
+  </div>
+
+</div></body></html>

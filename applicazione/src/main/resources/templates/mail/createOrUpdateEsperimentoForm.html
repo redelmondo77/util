@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<body>
+<div layout:fragment="content">
+
+      
+<div >
+    <h1>New Esperimento</h1>
+    
+<form action="#" th:action="@{/esperimento/new}" th:object="${esperimento}" method="post">
+    	
+    	<p>Id: <input type="text" th:field="*{id}" />
+    	<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Name Error</span>
+    	</p>
+        
+        <p>info: <input type="text" th:field="*{info}" />
+        <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}">Name Error</span>
+        </p>
+        
+        <p>fase1: <input type="text" th:field="*{fase1}" />
+        <span th:if="${#fields.hasErrors('fase1')}" th:errors="*{fase1}">Name Error</span>
+        </p>
+        
+        <p>fase2: <input type="text" th:field="*{fase2}" />
+        <span th:if="${#fields.hasErrors('fase2')}" th:errors="*{fase2}">Name Error</span>
+        </p>
+        
+        <p>
+        <input type="submit" value="Submit" /> 
+        <input type="reset" value="Reset" />
+        </p>
+
+</form>
+
+
+
+
+
+
+      
+  </div>
+
+</div></body></html>

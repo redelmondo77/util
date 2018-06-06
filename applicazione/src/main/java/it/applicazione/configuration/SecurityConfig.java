@@ -1,9 +1,12 @@
 package it.applicazione.configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-
+	@Autowired
+	ApplicazioneConfiguration applicazioneConfiguration;
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -55,17 +59,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user =
-             User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .build();
-        
-        
-        
+       
+		Collection<UserDetails> users = new ArrayList<UserDetails>();
+		
+		for(String utenti:  applicazioneConfiguration.getUtenti()  ){
+			
+			String user = (utenti.split("/"))[0];
+			String pwd = (utenti.split("/"))[1];
+			String ruolo = (utenti.split("/"))[2];
+			
+			UserDetails userDetails =
+		             User.withDefaultPasswordEncoder()
+		                .username(user)
+		                .password(pwd)
+		                .roles(ruolo)
+		                .build();
+		    			
+		    users.add(userDetails);
+			
+		}
 
-        return new InMemoryUserDetailsManager(user);
+        return new InMemoryUserDetailsManager(users);
     }
 	
 	
