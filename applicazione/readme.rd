@@ -25,6 +25,10 @@ md C:\dev\home\applicazione\tomcat
 md C:\dev\home\applicazione\tomcatLogging
 echo #HOMECONFIG  > C:\dev\home\applicazione\config\application.yml
 
+
+override application properties  with  application.yml
+
+
 WEB TEST
 
 run as > spring boot app
