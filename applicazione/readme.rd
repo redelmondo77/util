@@ -50,6 +50,7 @@ java -jar C:\dev\home\applicazione\applicazione-0.0.1-SNAPSHOT.war --spring.conf
 DB CONSOLE 
 
 
+
 http://localhost/applicazione/h2
 
 
