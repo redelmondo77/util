@@ -11,7 +11,6 @@ public class ApplicazioneConfiguration {
 	private String admin;
 	private String adminPwd;
 	private String[] destinatari;
-	private String[] utenti;
 
 	public String getAdmin() {
 		return admin;
@@ -36,17 +35,6 @@ public class ApplicazioneConfiguration {
 	public void setDestinatari(String[] destinatari) {
 		this.destinatari = destinatari;
 	}
-
-	public String[] getUtenti() {
-		return utenti;
-	}
-
-	public void setUtenti(String[] utenti) {
-		this.utenti = utenti;
-	}
-
-	
-	
 	
 	
 }

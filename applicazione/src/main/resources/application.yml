@@ -5,7 +5,7 @@ logging:
   level:
     root: error
     org.springframework: warn
-    it.applicazione.configuration: info
+    it.applicazione: info
   file: C:/dev/home/applicazione/myapplication.log
 
 
@@ -18,15 +18,39 @@ spring:
     properties:
       mail.smtp.starttls.enable: true
       mail.smtp.starttls.required: true
-      
 
+  # su console h2 imposta   JDBC URL: jdbc:h2:C:\dev\home\applicazione\db
+  datasource:
+    url: jdbc:h2:file:C:/dev/home/applicazione/db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    # http://localhost:80/applicazione/h2 
+    
+    
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true 
+    #hql 
+    #properties:
+      #hibernate:
+        #show_sql: true
+        #use_sql_comments: true
+        #format_sql: true
+        
+  h2:
+    console:
+      path: /h2
+      enabled: true
+     
+      
 configuration:
   applicazione:
     admin: admin
     admin-pwd: aaaaaa
-    utenti:
-    - uuuu1/tgwtr/USER
-    - uuuu2/tgwtr/USER
     destinatari:
     - a.xxxxxx@xxxxx.it
     - xxxxxxxo@hotmail.it
@@ -48,4 +72,3 @@ server:
 # Internationalization
 spring.messages.basename: messages/messages
 
- 

@@ -1,7 +1,6 @@
-package it.applicazione.controller;
+package it.applicazione.esperimento.controller;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import it.applicazione.configuration.ApplicazioneConfiguration;
-import it.applicazione.model.Esperimento;
-import it.applicazione.service.EmailServiceImpl;
+import it.applicazione.esperimento.model.Esperimento;
+import it.applicazione.esperimento.service.EmailServiceImpl;
 
 
 @Controller

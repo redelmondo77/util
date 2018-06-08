@@ -1,5 +1,5 @@
 
-package it.applicazione.model;
+package it.applicazione.esperimento.model;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

@@ -48,4 +48,16 @@ RUN
 java -jar C:\dev\home\applicazione\applicazione-0.0.1-SNAPSHOT.war --spring.config.location=C:/dev/home/applicazione/config/application.yml
 
 
+DB CONSOLE 
+
+http://localhost/applicazione/h2
+
+
+
+
+
+
+
+
+
 

@@ -18,11 +18,11 @@ class SecController {
 		return "login";
     }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(Map<String, Object> model) {
-		System.out.println("ffff");
+	@RequestMapping(value = "/logoutDone", method = RequestMethod.GET)
+	public String logoutDone(Map<String, Object> model) {
 		return "logout";
 	}
+	
 
 
 }
