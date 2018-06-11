@@ -49,14 +49,6 @@ class EsperimentoController {
     	}
         
     
-    
-    
-    
-	@RequestMapping(value = { "/test"}, method = RequestMethod.GET)
-	public String test(ModelMap model) {
-		return "test";
-	}
-	
 	@RequestMapping(value = { "/testexception" }, method = RequestMethod.GET)
 	public String exception(ModelMap model) {
 		new Integer("fff");
@@ -64,15 +56,7 @@ class EsperimentoController {
 	}
 	
 	
-    @RequestMapping("/welcome")
-    public String welcome() {
-		return "welcome";
-    }
-
-    @RequestMapping("/welcome2")
-    public String welcome2() {
-		return "welcome2";
-    }
+   
  }
     
     

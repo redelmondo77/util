@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
@@ -20,9 +22,11 @@ import org.springframework.beans.support.PropertyComparator;
 @Table(name = "persons")
 public class InternalPerson extends Person {
 
+	@Size(min=2, max=100)
 	@Column(name = "address")
     private String address;
 
+	@Size(min=2, max=100)
     @Column(name = "city")
     private String city;
 

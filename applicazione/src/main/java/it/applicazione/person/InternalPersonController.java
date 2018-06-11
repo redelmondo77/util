@@ -76,6 +76,8 @@ class InternalPersonController {
 		if (internalPerson.getLastName() == null) {
 			internalPerson.setLastName(""); // empty string signifies broadest
 											// possible search
+			//result.rejectValue("lastName", "notNull", "cannot be null!");
+			//return "internalPersons/findInternalPersons";
         }
 
 		// find internalPersons by last name

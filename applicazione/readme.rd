@@ -53,8 +53,10 @@ DB CONSOLE
 
 http://localhost/applicazione/h2
 
+LINKS
 
-
+https://getbootstrap.com/docs/3.3/getting-started/
+https://github.com/spring-projects/spring-petclinic
 
 
 

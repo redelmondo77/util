@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,9 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${configuration.applicazione.admin-pwd}")
 	private String adminPwd;
 	
+	
 	@Bean
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		DaoAuthenticationProvider authProvider = new CustomDaoAuthenticationProvider();
 		authProvider.setUserDetailsService(userDetailsService);
 		authProvider.setPasswordEncoder(passwordEncoder);
 		return authProvider;
@@ -82,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
             .authorizeRequests()
 				.antMatchers("/", "/home", "/resources/**", "/welcome/**", "/webjars/**"
+						, "/about/**", "/contact/**"
 						).permitAll()
 				
 				.and().authorizeRequests().antMatchers("/h2").permitAll()

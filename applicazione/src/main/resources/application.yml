@@ -18,6 +18,9 @@ spring:
     properties:
       mail.smtp.starttls.enable: true
       mail.smtp.starttls.required: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 3000
+      mail.smtp.writetimeout: 5000
 
   # su console h2 imposta   JDBC URL: jdbc:h2:C:\dev\home\applicazione\db
   datasource:

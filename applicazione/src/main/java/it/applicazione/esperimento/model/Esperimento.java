@@ -1,6 +1,9 @@
 
 package it.applicazione.esperimento.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,8 +11,8 @@ import javax.validation.constraints.Size;
 public class Esperimento {
 
 	
-    @NotNull
-    @Min(100)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     @NotNull

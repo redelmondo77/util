@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,12 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		@Override
 		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		it.applicazione.person.User u = users.findByUsername(username);
+		
+		if(u==null) {
+			throw new UsernameNotFoundException(
+					"User non esiste");
+		};
+		
 		List<Role> roles = u.getRoles();
 			
 			List<SimpleGrantedAuthority> authList = new ArrayList<>();

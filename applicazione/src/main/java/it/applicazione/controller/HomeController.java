@@ -16,5 +16,13 @@ public class HomeController {
 	public String home(ModelMap model) {
 		return "home";
 	}
+	@RequestMapping(value = { "/about" }, method = RequestMethod.GET)
+	public String about(ModelMap model) {
+		return "about";
+	}
+	@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
+	public String contact(ModelMap model) {
+		return "contact";
+	}
 	
 }

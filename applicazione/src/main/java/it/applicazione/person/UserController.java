@@ -84,9 +84,12 @@ class UserController {
 		if (StringUtils.hasLength(user.getUsername()) && user.isNew()
 				&& users.findByUsername(user.getUsername()) != null) {
 			result.rejectValue("username", "duplicate", "already exists");
-        }
+        
+		
+		}
         if (result.hasErrors()) {
             model.put("user", user);
+            user.setInternalPerson(internalPerson);
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
         } else {
 			user.setInternalPerson(internalPerson);
