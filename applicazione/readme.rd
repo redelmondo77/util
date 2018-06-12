@@ -56,8 +56,10 @@ http://localhost/applicazione/h2
 LINKS
 
 https://getbootstrap.com/docs/3.3/getting-started/
+https://themes.getbootstrap.com/
+https://startbootstrap.com/template-categories/all/
 https://github.com/spring-projects/spring-petclinic
-
+https://www.w3schools.com/Bootstrap/bootstrap_ref_comp_glyphs.asp
 
 
 
