@@ -30,5 +30,9 @@ public interface EsperimentoGroupRepository extends Repository<EsperimentoGroup,
 	Collection<EsperimentoGroup> findByInfo(@Param("info") String info);
 
 
+	Collection<EsperimentoGroup> findByInternalPerson(InternalPerson InternalPerson);
+	
+
+	
 
 }

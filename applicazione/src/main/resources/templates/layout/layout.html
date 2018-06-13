@@ -58,7 +58,7 @@
 
               </a></li>
               <li th:classappend="${#request.getRequestURI().startsWith( {#request.contextPath}+ '/personEsperimento')  ? 'active':''}">
-              <a th:href="@{/personEsperimentoGroup/find}">
+              <a th:href="@{/esperimentoGroup/list}">
               <span class=" glyphicon glyphicon-list"></span>
               <span th:text="#{tests}" >Esperimenti</span>
               </a>

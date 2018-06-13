@@ -33,8 +33,11 @@
 		
 	</table>
 
+  
 	<a th:href="@{{id}/esperimento/new(id=${esperimentoGroup.id})}"
 		class="btn btn-default">Add New Esperimento</a>
+ <!-- <a th:href="@{__${esperimentoGroup.id}__/esperimento/new}"
+		class="btn btn-default">Add New Esperimento</a> -->	
 
 	<br />
 	<br />
@@ -61,13 +64,16 @@
           	  <td th:text="${esperimento.info}"/>
           	  <td th:text="${esperimento.fase1}"/>
           	  <td th:text="${esperimento.fase2}"/>
-          	  <td>
+          	 
+          	 <!-- 
+          	  <td sec:authorize="hasRole('ROLE_ADMIN')" >
                   <a th:href="@{__${esperimentoGroup.id}__/esperimento/__${esperimento.id}__/edit}" th:text="${'edit'}"/></a>
               </td>
-          
-             
-         
-          </tr>
+               -->
+               <td>
+                  <a th:href="@{__${esperimentoGroup.id}__/esperimento/__${esperimento.id}__/edit}" th:text="${'edit'}"/></a>
+              </td>
+           </tr>
         </tbody>
 		
 		

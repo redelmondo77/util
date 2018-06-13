@@ -22,15 +22,15 @@ public class Esperimento extends BaseEntity {
 
     
     @NotNull
-    @Size(min=2, max=11)
+    @Size(min=2, max=7)
     private String info;
     
     @NotNull
-    @Size(min=2, max=12)
+    @Size(min=2, max=8)
     private String fase1;
     
     @NotNull
-    @Size(min=2, max=13)
+    @Size(min=2, max=9)
     private String fase2;
     
 

@@ -2,6 +2,7 @@ package it.applicazione.esperimento.controller;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import it.applicazione.person.InternalPerson;
 import it.applicazione.person.User;
 
 
+@PreAuthorize(EsperimentoGroupController.preInvocationAuthCheck)
 @Controller
 @RequestMapping("/esperimentoGroup/{esperimentoGroupId}")
 class EsperimentoController {
@@ -35,23 +37,13 @@ class EsperimentoController {
     @Autowired
     EsperimentoService esperimentoService;
     
-    /*
-	@ModelAttribute("esperimentoGroup")
-	public EsperimentoGroup findEsperimentoGroup(@PathVariable("esperimentoGroupId") long esperimentoGroupId) {
-		EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
-		return esperimentoGroup;
-	}
-	*/
-    
     
     @RequestMapping(value = "/esperimento/new", method = RequestMethod.GET)
-    public String initCreationForm(EsperimentoGroup esperimentoGroup,
-    		ModelMap model
+    public String initCreationForm(ModelMap model
     		,@PathVariable("esperimentoGroupId") long esperimentoGroupId
     		) {
     	
     	Esperimento esperimento = new Esperimento();
-    	//esperimento.setEsperimentoGroup(esperimentoGroup);
         model.put("esperimento", esperimento);
         return "esperimento/createOrUpdateEsperimentoForm";
         
@@ -87,7 +79,7 @@ class EsperimentoController {
         	esperimento.setEsperimentoGroup(esperimentoGroup);
         	
         	this.esperimentoService.save(esperimento);
-        	//emailService.sendSimpleMessage(ogg,text);
+        	//emailService.sendSimpleMessage(ogg,textGroup+text);
         	
             return "redirect:/esperimentoGroup/{esperimentoGroupId}";
             
@@ -98,14 +90,13 @@ class EsperimentoController {
     
     @RequestMapping(value = "/esperimento/{esperimentoId}/edit", method = RequestMethod.GET)
    	public String initUpdateForm(
-   			//EsperimentoGroup esperimentoGroup, 
    			@PathVariable("esperimentoId") long esperimentoId,
    			@PathVariable("esperimentoGroupId") long esperimentoGroupId
    			,ModelMap model) {
 
-    	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
+    	//EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
     	Esperimento esperimento = this.esperimentoService.findById(esperimentoId);
-    	esperimento.setEsperimentoGroup(esperimentoGroup);
+    	//esperimento.setEsperimentoGroup(esperimentoGroup);
    		model.put("esperimento", esperimento);
    		return "esperimento/createOrUpdateEsperimentoForm";
        }
@@ -118,14 +109,16 @@ class EsperimentoController {
     		@PathVariable("esperimentoGroupId") long esperimentoGroupId,
     		BindingResult bindingResult) {
     	
-    	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
     	
 
 		if (result.hasErrors()) {
             model.put("esperimento", esperimento);
-            esperimento.setEsperimentoGroup(esperimentoGroup);
+            //esperimento.setEsperimentoGroup(esperimentoGroup);
             return "esperimento/createOrUpdateEsperimentoForm";
         } else {
+        	
+        	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
+        	
         	esperimentoGroup.addEsperimento(esperimento);
         	esperimento.setEsperimentoGroup(esperimentoGroup);
 			this.esperimentoService.save(esperimento);

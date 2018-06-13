@@ -36,5 +36,11 @@ public class EsperimentoGroupService {
 	public Collection<EsperimentoGroup> findByInfo(String info){
 		return esperimentoGroupRepository.findByInfo(info);
 	}
+	
+	
+	public Collection<EsperimentoGroup> findByInternalPerson(InternalPerson InternalPerson){
+		return esperimentoGroupRepository.findByInternalPerson(InternalPerson);
+	}
+
 
 }
