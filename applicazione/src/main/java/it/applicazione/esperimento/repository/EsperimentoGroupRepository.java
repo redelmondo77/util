@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.applicazione.esperimento.model.EsperimentoGroup;
 import it.applicazione.person.InternalPerson;
+import it.applicazione.person.User;
 
 public interface EsperimentoGroupRepository extends Repository<EsperimentoGroup, Integer> {
 
@@ -30,9 +31,13 @@ public interface EsperimentoGroupRepository extends Repository<EsperimentoGroup,
 	Collection<EsperimentoGroup> findByInfo(@Param("info") String info);
 
 
-	Collection<EsperimentoGroup> findByInternalPerson(InternalPerson InternalPerson);
-	
-
-	
+	// better to use @Query
+	//Collection<EsperimentoGroup> findByInternalPerson(InternalPerson InternalPerson);
+		
+	@Query(
+	"SELECT esperimentoGroup FROM EsperimentoGroup esperimentoGroup " 
+	+ "left join fetch esperimentoGroup.esperimentos WHERE esperimentoGroup.internalPerson.id LIKE :id"
+	)
+	Collection<EsperimentoGroup> findByInternalPerson(@Param("id") Long id);
 
 }

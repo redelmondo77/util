@@ -17,6 +17,9 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
+import it.applicazione.esperimento.model.Esperimento;
+import it.applicazione.esperimento.model.EsperimentoGroup;
+
 
 @Entity
 @Table(name = "persons")
@@ -36,6 +39,10 @@ public class InternalPerson extends Person {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "internalPerson", fetch = FetchType.LAZY)
 	private Set<User> users;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "internalPerson", fetch = FetchType.LAZY )
+	private Set<EsperimentoGroup> esperimentoGroups;
 
 
     public String getAddress() {

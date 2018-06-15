@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.cache.annotation.Cacheable;
 @Service
 @Transactional
 public class UserService {
@@ -33,6 +33,17 @@ public class UserService {
 		List<Role> roles = user.getRoles();
 		return user;
 	}
+	
+	
+	@Cacheable("usersCache")
+	public User cacheFindByUsernameFetchPersonAndRoles(String username) {
+		User user = userRepository.findByUsername(username);
+		List<Role> roles = user.getRoles();
+		InternalPerson internalPerson = user.getInternalPerson();
+		return user;
+	}
+	
+	
 
 	@Transactional(readOnly = true)
 	public User findByUsernameFetchPerson(String username) {
@@ -41,10 +52,14 @@ public class UserService {
 		return user;
 	}
 
-
-	@CacheEvict(cacheNames = "usersCache", key = "#user.id")
+	@CacheEvict(value="usersCache", allEntries=true)
 	public User save(User user) {
 		return userRepository.save(user);
 	}
+	
+	
+	
+	
+	
 
 }

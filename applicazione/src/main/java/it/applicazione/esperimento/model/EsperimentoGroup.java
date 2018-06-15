@@ -13,10 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import it.applicazione.model.BaseEntity;
 import it.applicazione.person.InternalPerson;
-import it.applicazione.person.User;
 
 @Entity
 @Table(name = "esperimentoGroup")
@@ -31,7 +29,8 @@ public class EsperimentoGroup extends BaseEntity {
 	@JoinColumn(name = "person_id")
 	private InternalPerson internalPerson;
     
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "esperimentoGroup", fetch = FetchType.EAGER)
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "esperimentoGroup", fetch = FetchType.EAGER )
 	private Set<Esperimento> esperimentos;
 
 	public String getInfo() {

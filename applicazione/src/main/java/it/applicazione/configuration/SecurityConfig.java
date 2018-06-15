@@ -50,12 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${spring.h2.console.enabled}")
 	private boolean h2Console;
 	
-	@Value("${configuration.applicazione.admin}")
-	private String admin;
-	
-	@Value("${configuration.applicazione.admin-pwd}")
-	private String adminPwd;
-	
 	
 	@Bean
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -104,7 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			logger.warn("console h2 attiva, csrf protection disabled");
 			http.csrf().disable();
 			http.headers().frameOptions().disable();
-			firstTime();
 		}else{
 			logger.warn("console h2 disabled");
 		}
@@ -112,32 +105,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 
-	public void firstTime() {
-		
-		it.applicazione.person.User user = userRepository.findByUsername(admin);
-		
-		if(user==null){
-			logger.warn("insert new admin user: "+admin);
-			
-			Role role = new Role();
-			role.setDescription("ADMIN");
-			
-			user = new it.applicazione.person.User();
-			user.setUsername(admin);
-			user.setPassword(passwordEncoder.encode(adminPwd));
-			user.addRole(role);
-			
-			InternalPerson internalPerson = new InternalPerson();
-			internalPerson.setFirstName(admin);
-			internalPerson.setLastName(admin);
-			internalPerson.addUser(user);
-			
-			internalPersonRepository.save(internalPerson);
-			
-		}else{
-			logger.warn("admin user: "+user.getUsername()+" "+user.getEmail());
-		}
-
-	}
-	
 }

@@ -60,11 +60,12 @@ class EsperimentoGroupController {
 		
 		mav.addObject("esperimentoGroup",esperimentoGroupService.findById(esperimentoGroupId));
 		
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//User user = userService.findByUsernameFetchPerson(auth.getName());
+		//InternalPerson internalPerson = user.getInternalPerson();
+		//mav.addObject("internalPerson",internalPerson);
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findByUsernameFetchPerson(auth.getName());
-		InternalPerson internalPerson = user.getInternalPerson();
-				
+		InternalPerson internalPerson = userService.cacheFindByUsernameFetchPersonAndRoles(SecurityContextHolder.getContext().getAuthentication().getName()).getInternalPerson();
 		mav.addObject("internalPerson",internalPerson);
 		
 		return mav;
@@ -101,10 +102,12 @@ class EsperimentoGroupController {
 	public String esperimentoGroupList(EsperimentoGroup esperimentoGroup, 
 			BindingResult result, Map<String, Object> model) {
 		
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//User user = userService.findByUsernameFetchPerson(auth.getName());
+		//InternalPerson internalPerson = user.getInternalPerson();
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findByUsernameFetchPerson(auth.getName());
-		InternalPerson internalPerson = user.getInternalPerson();
+		InternalPerson internalPerson = 
+		userService.cacheFindByUsernameFetchPersonAndRoles(SecurityContextHolder.getContext().getAuthentication().getName()).getInternalPerson();
 		
 		Collection<EsperimentoGroup> results = 
 				this.esperimentoGroupService.findByInternalPerson(internalPerson);
@@ -114,10 +117,10 @@ class EsperimentoGroupController {
             result.rejectValue("info", "notFound", "not found");
 			//return "esperimentoGroup/findEsperimentoGroup";
 			return "esperimentoGroup/esperimentoGroupList";
-        } else if (results.size() == 1) {
-			// 1 internalPerson found
-        	esperimentoGroup = results.iterator().next();
-			return "redirect:/esperimentoGroup/" + esperimentoGroup.getId();
+        //} else if (results.size() == 1) {
+		//	// 1 internalPerson found
+       // 	esperimentoGroup = results.iterator().next();
+		//	return "redirect:/esperimentoGroup/" + esperimentoGroup.getId();
         } else {
 			// multiple internalPersons found
             model.put("selections", results);

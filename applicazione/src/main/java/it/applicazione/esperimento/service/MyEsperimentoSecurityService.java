@@ -27,19 +27,26 @@ public class MyEsperimentoSecurityService {
 	public boolean hasAccess(long esperimentoGroupId) {
 	      
 		try{
-	      EsperimentoGroup esperimentoGroup = esperimentoGroupService.findById(esperimentoGroupId);
 			
-		  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			User user = userService.findByUsernameFetchPerson(auth.getName());
-			InternalPerson internalPerson = user.getInternalPerson();
+	      //EsperimentoGroup esperimentoGroup = esperimentoGroupService.findById(esperimentoGroupId);
+	      EsperimentoGroup esperimentoGroup = esperimentoGroupService.cacheFindById(esperimentoGroupId);
 			
+	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+		  	//User user = userService.findByUsernameFetchPerson(auth.getName());
+			//InternalPerson internalPerson = user.getInternalPerson();
+			
+		  	// cache
+		  	InternalPerson internalPerson = 
+		  	userService.cacheFindByUsernameFetchPersonAndRoles(auth.getName()).getInternalPerson();
+		  	
+		  	// info
+			//Collection<? extends GrantedAuthority> grantedAuthList = auth.getAuthorities();
+			//for (GrantedAuthority grantedAuth : grantedAuthList) {
+			//	System.out.println("MyEsperimentoSecurityService:"+ auth.getName()+" "+grantedAuth.getAuthority()  );
+		    //}
 			// info
-			Collection<? extends GrantedAuthority> grantedAuthList = auth.getAuthorities();
-			for (GrantedAuthority grantedAuth : grantedAuthList) {
-				System.out.println("MyEsperimentoSecurityService:"+ auth.getName()+" "+grantedAuth.getAuthority()  );
-		    }
-			// info
-			
+		  	
 			if( esperimentoGroup.getInternalPerson().getId()!= internalPerson.getId()){
 				return false;
 			}else{
