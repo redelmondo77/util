@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html layout:decorator="layout/layout" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+
+<!-- 
+<head>
+<link rel="stylesheet" type="text/css" 
+  th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+  href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" 
+  th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}"
+  href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"/></head>
+<script th:src="@{/webjars/jquery/jquery.min.js}"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"
+  ></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"
+  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
+  ></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+  src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"
+  ></script>
+</head>
+-->
 <body>
+
 <div layout:fragment="content">
-
-
-
 
     <h2>esperimentoGroup</h2>
 
@@ -12,9 +30,9 @@
        
         <thead>
         <tr>
-            <th style="width: 150px;">Id</th>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 120px">info</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>info</th>
             <th>esperimenti</th>
         </tr>
         </thead>
@@ -22,11 +40,11 @@
         
           <tr th:each="esperimentoGroup : ${selections}">
           
-          	  <td th:text="${esperimentoGroup.id}"/>
+          	  <td th:text="${esperimentoGroup.id}">id</td>
           
               <td>
                 
-                  <a th:href="@{/esperimentoGroup/__${esperimentoGroup.id}__}" th:text="${esperimentoGroup.info}"/></a>
+                  <a th:href="@{/esperimentoGroup/__${esperimentoGroup.id}__}" th:text="${esperimentoGroup.info}">link</a>
                   
                   <!--
                   <a th:href="@{/__${esperimentoGroup.id}__}" th:text="${esperimentoGroup.info}"/></a>
@@ -34,9 +52,9 @@
             
               
               </td>
-              <td th:text="${esperimentoGroup.info}"/>
+              <td th:text="${esperimentoGroup.info}">info</td>
               
-              <td><span th:each="esperimento : ${esperimentoGroup.esperimentos}" th:text="${esperimento.info + ', '}  "></span> </td>
+              <td><span th:each="esperimento : ${esperimentoGroup.esperimentos}" th:text="${esperimento.info + ', '}  ">info</span> </td>
          
           </tr>
         </tbody>
