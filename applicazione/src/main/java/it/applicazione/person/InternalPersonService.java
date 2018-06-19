@@ -2,12 +2,8 @@ package it.applicazione.person;
 
 import java.util.Collection;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +52,9 @@ public class InternalPersonService {
 	}
 
 	
-	
+	public void save(InternalPerson internalPerson){
+		internalPersonRepository.save(internalPerson);
+	}
 	
 	
 	

@@ -30,15 +30,38 @@ import it.applicazione.person.UserService;
 /*
  * https://docs.spring.io/autorepo/docs/spring-security/3.0.x/reference/el-access.html
  */
-@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('BACKOFFICE') ")
 @Controller
 class EsperimentoGroupController {
 
 	
 	private static final String VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM = "esperimentoGroup/createOrUpdateEsperimentoGroupForm";
 	
-	public static final String  preInvocationAuthCheck
-	= "hasRole('ADMIN') or ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#esperimentoGroupId) )";
+	/*
+	 * admin or esperimentoGroupId is mine
+	 */
+	public static final String  preInvocationAuthCheck =
+	"hasRole('ADMIN') " 
+	+" or "+ 
+	" ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#esperimentoGroupId) )";
+	
+	/*
+	 * admin or read_owned_privilege on EsperimentoGroup with id check or read_privilege on EsperimentoGroup
+	 */
+	 public static final String hasReadPermissionEsperimentoGroup = 
+	 "( hasRole('ADMIN') )" 
+	 +" or "+ 
+	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','read_owned_privilege') )" 
+	 +" or "+
+	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','read_privilege') )";
+	  
+	 public static final String hasWritePermissionEsperimentoGroup = 
+	 "( hasRole('ADMIN') )" 
+	 +" or "+ 
+	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_owned_privilege') )" 
+	 +" or "+
+	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_privilege') )";
+			 
 	
 	@Autowired
 	EsperimentoGroupService esperimentoGroupService;
@@ -52,22 +75,14 @@ class EsperimentoGroupController {
     }
 
     
-    
-	@PreAuthorize(preInvocationAuthCheck)
+    @PreAuthorize(hasReadPermissionEsperimentoGroup)
+	//@PreAuthorize(preInvocationAuthCheck)
 	@RequestMapping("/esperimentoGroup/{esperimentoGroupId}")
 	public ModelAndView showInternalPerson(@PathVariable("esperimentoGroupId") long esperimentoGroupId) {
 		ModelAndView mav = new ModelAndView("esperimentoGroup/esperimentoGroupDetails");
-		
 		mav.addObject("esperimentoGroup",esperimentoGroupService.findById(esperimentoGroupId));
-		
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//User user = userService.findByUsernameFetchPerson(auth.getName());
-		//InternalPerson internalPerson = user.getInternalPerson();
-		//mav.addObject("internalPerson",internalPerson);
-		
 		InternalPerson internalPerson = userService.cacheFindByUsernameFetchPersonAndRoles(SecurityContextHolder.getContext().getAuthentication().getName()).getInternalPerson();
 		mav.addObject("internalPerson",internalPerson);
-		
 		return mav;
 	}
 
@@ -102,10 +117,6 @@ class EsperimentoGroupController {
 	public String esperimentoGroupList(EsperimentoGroup esperimentoGroup, 
 			BindingResult result, Map<String, Object> model) {
 		
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//User user = userService.findByUsernameFetchPerson(auth.getName());
-		//InternalPerson internalPerson = user.getInternalPerson();
-		
 		InternalPerson internalPerson = 
 		userService.cacheFindByUsernameFetchPersonAndRoles(SecurityContextHolder.getContext().getAuthentication().getName()).getInternalPerson();
 		
@@ -113,20 +124,12 @@ class EsperimentoGroupController {
 				this.esperimentoGroupService.findByInternalPerson(internalPerson);
 		
         if (results.isEmpty()) {
-			// no internalPersons found
             result.rejectValue("info", "notFound", "not found");
-			//return "esperimentoGroup/findEsperimentoGroup";
 			return "esperimentoGroup/esperimentoGroupList";
-        //} else if (results.size() == 1) {
-		//	// 1 internalPerson found
-       // 	esperimentoGroup = results.iterator().next();
-		//	return "redirect:/esperimentoGroup/" + esperimentoGroup.getId();
         } else {
-			// multiple internalPersons found
             model.put("selections", results);
 			return "esperimentoGroup/esperimentoGroupList";
         }
-		
 		
     }
 	
@@ -143,8 +146,6 @@ class EsperimentoGroupController {
 	@RequestMapping(value = "/esperimentoGroup", method = RequestMethod.GET)
 	public String processFindForm(EsperimentoGroup esperimentoGroup, BindingResult result, Map<String, Object> model) {
 
-		// allow parameterless GET request for /internalPersons to return all
-		// records
 		if (esperimentoGroup.getInfo() == null) {
 			esperimentoGroup.setInfo(""); 
         }
@@ -168,7 +169,8 @@ class EsperimentoGroupController {
         }
     }
 
-	@PreAuthorize(preInvocationAuthCheck)
+	@PreAuthorize(hasWritePermissionEsperimentoGroup)
+	//@PreAuthorize(preInvocationAuthCheck)
 	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.GET)
 	public String initUpdateEsperimentoGroupForm(@PathVariable("esperimentoGroupId") long esperimentoGroupId, Model model) {
 		EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
@@ -176,7 +178,8 @@ class EsperimentoGroupController {
 		return VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM;
     }
 
-	@PreAuthorize(preInvocationAuthCheck)
+	@PreAuthorize(hasWritePermissionEsperimentoGroup)
+	//@PreAuthorize(preInvocationAuthCheck)
 	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.POST)
 	public String processUpdateInternalPersonForm(@Valid EsperimentoGroup esperimentoGroup, BindingResult result,
 			@PathVariable("esperimentoGroupId") long internalPersonId) {

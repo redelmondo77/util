@@ -38,8 +38,10 @@ public class UserService {
 	@Cacheable("usersCache")
 	public User cacheFindByUsernameFetchPersonAndRoles(String username) {
 		User user = userRepository.findByUsername(username);
-		List<Role> roles = user.getRoles();
-		InternalPerson internalPerson = user.getInternalPerson();
+		if(user!=null){
+			List<Role> roles = user.getRoles();
+			InternalPerson internalPerson = user.getInternalPerson();
+		}
 		return user;
 	}
 	

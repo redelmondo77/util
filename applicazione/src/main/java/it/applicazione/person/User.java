@@ -13,6 +13,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,6 +27,7 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import it.applicazione.esperimento.model.Esperimento;
 import it.applicazione.model.BaseEntity;
 
 @Entity
@@ -57,6 +60,38 @@ public class User extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
 	private Set<Role> roles = new LinkedHashSet<>();
 
+
+	
+    @ManyToMany(fetch = FetchType.EAGER) 
+    @JoinTable(name = "users_privileges", 
+      joinColumns = 
+        @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = 
+        @JoinColumn(name = "privilege_id", referencedColumnName = "id")) 
+    private Set<Privilege> privileges;
+	
+	
+	public void addPrivilege(Privilege privilege) {
+		if(!getPrivilegeInternal().contains(privilege)){
+			getPrivilegeInternal().add(privilege);
+		}
+    }
+	protected Set<Privilege> getPrivilegeInternal() {
+		if (this.privileges == null) {
+			this.privileges = new HashSet<>();
+        }
+		return this.privileges;
+    }
+    
+    
+    
+	public Set<Privilege> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
+	}
 
 	protected Set<Role> getRolesInternal() {
 		if (this.roles == null) {
