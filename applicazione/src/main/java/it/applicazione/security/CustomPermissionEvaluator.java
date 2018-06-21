@@ -97,6 +97,11 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 			return false;
 		}
 		
+		// new
+		if(null==targetId){
+			return true;
+		}
+		
 		Object entity = em.find(c, targetId);
 		
 		if(entity==null){return false;}

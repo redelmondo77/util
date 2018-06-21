@@ -37,17 +37,12 @@ class EsperimentoGroupController {
 	
 	private static final String VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM = "esperimentoGroup/createOrUpdateEsperimentoGroupForm";
 	
-	/*
-	 * admin or esperimentoGroupId is mine
-	 */
+
 	public static final String  preInvocationAuthCheck =
-	"hasRole('ADMIN') " 
-	+" or "+ 
-	" ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#esperimentoGroupId) )";
+	 "hasRole('ADMIN') " 
+	 +" or "+ 
+	 " ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#esperimentoGroupId) )";
 	
-	/*
-	 * admin or read_owned_privilege on EsperimentoGroup with id check or read_privilege on EsperimentoGroup
-	 */
 	 public static final String hasReadPermissionEsperimentoGroup = 
 	 "( hasRole('ADMIN') )" 
 	 +" or "+ 
@@ -55,17 +50,13 @@ class EsperimentoGroupController {
 	 +" or "+
 	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','read_privilege') )";
 	  
-	 public static final String hasUpdatePermissionEsperimentoGroup = 
+	 public static final String hasWritePermissionEsperimentoGroup = 
 	 "( hasRole('ADMIN') )" 
 	 +" or "+ 
 	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_owned_privilege') )" 
 	 +" or "+
 	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_privilege') )";
 			
-	 public static final String hasCreatePermissionEsperimentoGroup = 
-	 " hasRole('ADMIN') or hasAuthority('ESPERIMENTOGROUP_WRITE_PRIVILEGE') or hasAuthority('ESPERIMENTOGROUP_WRITE_OWNED_PRIVILEGE') ";
-		
-	 
 	
 	@Autowired
 	EsperimentoGroupService esperimentoGroupService;
@@ -80,7 +71,6 @@ class EsperimentoGroupController {
 
     
     @PreAuthorize(hasReadPermissionEsperimentoGroup)
-	//@PreAuthorize(preInvocationAuthCheck)
 	@RequestMapping("/esperimentoGroup/{esperimentoGroupId}")
 	public ModelAndView showInternalPerson(@PathVariable("esperimentoGroupId") long esperimentoGroupId) {
 		ModelAndView mav = new ModelAndView("esperimentoGroup/esperimentoGroupDetails");
@@ -91,15 +81,15 @@ class EsperimentoGroupController {
 	}
 
     
-    @PreAuthorize(hasCreatePermissionEsperimentoGroup)
-	@RequestMapping(value = "/esperimentoGroup/new", method = RequestMethod.GET)
+    @PreAuthorize(hasWritePermissionEsperimentoGroup)
+    @RequestMapping(value = "/esperimentoGroup/new", method = RequestMethod.GET)
     public String initCreationForm(Map<String, Object> model) {
 		EsperimentoGroup esperimentoGroup = new EsperimentoGroup();
 		model.put("esperimentoGroup", esperimentoGroup);
 		return VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM;
     }
 
-    @PreAuthorize(hasCreatePermissionEsperimentoGroup)
+    @PreAuthorize(hasWritePermissionEsperimentoGroup)
 	@RequestMapping(value = "/esperimentoGroup/new", method = RequestMethod.POST)
 	public String processCreationForm(@Valid EsperimentoGroup esperimentoGroup, BindingResult result) {
         if (result.hasErrors()) {
@@ -141,14 +131,12 @@ class EsperimentoGroupController {
 	
 	
 	@PreAuthorize(hasReadPermissionEsperimentoGroup)
-	//@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/esperimentoGroup/find", method = RequestMethod.GET)
     public String initFindForm(Map<String, Object> model) {
 		model.put("esperimentoGroup", new EsperimentoGroup());
 		return "esperimentoGroup/findEsperimentoGroup";
     }
 
-	//@PreAuthorize("hasRole('ADMIN')")
 	@PreAuthorize(hasReadPermissionEsperimentoGroup)
 	@RequestMapping(value = "/esperimentoGroup", method = RequestMethod.GET)
 	public String processFindForm(EsperimentoGroup esperimentoGroup, BindingResult result, Map<String, Object> model) {
@@ -176,8 +164,7 @@ class EsperimentoGroupController {
         }
     }
 
-	@PreAuthorize(hasUpdatePermissionEsperimentoGroup)
-	//@PreAuthorize(preInvocationAuthCheck)
+	@PreAuthorize(hasWritePermissionEsperimentoGroup)
 	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.GET)
 	public String initUpdateEsperimentoGroupForm(@PathVariable("esperimentoGroupId") long esperimentoGroupId, Model model) {
 		EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
@@ -185,8 +172,7 @@ class EsperimentoGroupController {
 		return VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM;
     }
 
-	@PreAuthorize(hasUpdatePermissionEsperimentoGroup)
-	//@PreAuthorize(preInvocationAuthCheck)
+	@PreAuthorize(hasWritePermissionEsperimentoGroup)
 	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.POST)
 	public String processUpdateInternalPersonForm(@Valid EsperimentoGroup esperimentoGroup, BindingResult result,
 			@PathVariable("esperimentoGroupId") long internalPersonId) {
