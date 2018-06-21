@@ -57,20 +57,19 @@ public class User extends BaseEntity {
 	@JoinColumn(name = "person_id")
 	private InternalPerson internalPerson;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-	private Set<Role> roles = new LinkedHashSet<>();
+	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+	//private Set<Role> roles = new LinkedHashSet<>();
 
 
 	
     @ManyToMany(fetch = FetchType.EAGER) 
     @JoinTable(name = "users_privileges", 
-      joinColumns = 
-        @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = 
-        @JoinColumn(name = "privilege_id", referencedColumnName = "id")) 
+    joinColumns = 
+    @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = 
+    @JoinColumn(name = "privilege_id", referencedColumnName = "id")) 
     private Set<Privilege> privileges;
-	
-	
+    
 	public void addPrivilege(Privilege privilege) {
 		if(!getPrivilegeInternal().contains(privilege)){
 			getPrivilegeInternal().add(privilege);
@@ -82,17 +81,43 @@ public class User extends BaseEntity {
         }
 		return this.privileges;
     }
-    
-    
-    
-	public Set<Privilege> getPrivileges() {
+    public Set<Privilege> getPrivileges() {
 		return privileges;
 	}
-
-	public void setPrivileges(Set<Privilege> privileges) {
+    public void setPrivileges(Set<Privilege> privileges) {
 		this.privileges = privileges;
 	}
 
+    @ManyToMany(fetch = FetchType.EAGER) 
+    @JoinTable(name = "users_roles", 
+    joinColumns = 
+    @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = 
+    @JoinColumn(name = "role_id", referencedColumnName = "id")) 
+    private Set<Role> roles;
+	
+    public void addRole(Role role) {
+		if(!getRoleInternal().contains(role)){
+			getRoleInternal().add(role);
+		}
+    }
+	protected Set<Role> getRoleInternal() {
+		if (this.roles == null) {
+			this.roles = new HashSet<>();
+        }
+		return this.roles;
+    }
+    public Set<Role> getRoles() {
+		return roles;
+	}
+    public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+    
+    
+	
+	/*
+	 
 	protected Set<Role> getRolesInternal() {
 		if (this.roles == null) {
 			this.roles = new HashSet<>();
@@ -103,7 +128,11 @@ public class User extends BaseEntity {
 	protected void setRolesInternal(Set<Role> Roles) {
 		this.roles = Roles;
 	}
-
+	
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
 	public List<Role> getRoles() {
 		List<Role> sortedRoles = new ArrayList<>(getRolesInternal());
 		PropertyComparator.sort(sortedRoles, new MutableSortDefinition("date", false, false));
@@ -114,6 +143,10 @@ public class User extends BaseEntity {
 		getRolesInternal().add(role);
 		role.setUser(this);
 	}
+	
+	*/
+
+
 
 	public String getUsername() {
 		return username;
@@ -145,10 +178,6 @@ public class User extends BaseEntity {
 
 	public void setInternalPerson(InternalPerson internalPerson) {
 		this.internalPerson = internalPerson;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
 	}
 
 	public String getEmail() {

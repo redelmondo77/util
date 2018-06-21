@@ -28,7 +28,7 @@
     </div>
     
     
-    <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('BACKOFFICE')">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Find
           esperimentoGroup</button>

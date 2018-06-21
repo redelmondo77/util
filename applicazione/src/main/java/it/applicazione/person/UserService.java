@@ -1,6 +1,8 @@
 package it.applicazione.person;
 
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -30,7 +32,7 @@ public class UserService {
 
 	public User findByIdFetchRoles(long id) {
 		User user = userRepository.findById(id);
-		List<Role> roles = user.getRoles();
+		Set<Role> roles = user.getRoles();
 		return user;
 	}
 	
@@ -39,7 +41,7 @@ public class UserService {
 	public User cacheFindByUsernameFetchPersonAndRoles(String username) {
 		User user = userRepository.findByUsername(username);
 		if(user!=null){
-			List<Role> roles = user.getRoles();
+			Set<Role> roles = user.getRoles();
 			InternalPerson internalPerson = user.getInternalPerson();
 		}
 		return user;

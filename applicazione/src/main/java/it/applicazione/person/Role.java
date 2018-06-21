@@ -24,11 +24,6 @@ public class Role extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-	
-	
     @ManyToMany(fetch = FetchType.EAGER) 
     @JoinTable(name = "roles_privileges", 
     joinColumns = 
@@ -50,8 +45,6 @@ public class Role extends BaseEntity {
 		return this.privileges;
     }
 	
-	
-
 	public Set<Privilege> getPrivileges() {
 		return privileges;
 	}
@@ -65,15 +58,5 @@ public class Role extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
 
 }

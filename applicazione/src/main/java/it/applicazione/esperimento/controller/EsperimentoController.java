@@ -38,7 +38,7 @@ class EsperimentoController {
     @Autowired
     EsperimentoService esperimentoService;
     
-    @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
+    @PreAuthorize(EsperimentoGroupController.hasUpdatePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/new", method = RequestMethod.GET)
     public String initCreationForm(ModelMap model
     		,@PathVariable("esperimentoGroupId") long esperimentoGroupId
@@ -50,7 +50,7 @@ class EsperimentoController {
         
     }
     
-    @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
+    @PreAuthorize(EsperimentoGroupController.hasUpdatePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/new", method = RequestMethod.POST)
     public String processCreationForm(ModelMap model,
     		@Valid Esperimento esperimento,
@@ -89,7 +89,7 @@ class EsperimentoController {
         
     	}
         
-    @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
+    @PreAuthorize(EsperimentoGroupController.hasUpdatePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/{esperimentoId}/edit", method = RequestMethod.GET)
    	public String initUpdateForm(
    			@PathVariable("esperimentoId") long esperimentoId,
@@ -104,7 +104,7 @@ class EsperimentoController {
        }
     
     
-    @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
+    @PreAuthorize(EsperimentoGroupController.hasUpdatePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/{esperimentoId}/edit", method = RequestMethod.POST)
     public String processUpdateForm(
     		@Valid Esperimento esperimento, BindingResult result, 

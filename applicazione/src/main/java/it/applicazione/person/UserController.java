@@ -112,19 +112,15 @@ class UserController {
     @RequestMapping(value = "/users/{userId}/edit", method = RequestMethod.POST)
     public String processUpdateForm(@Valid User user, BindingResult result, InternalPerson internalPerson, ModelMap model) {
 
-		if (StringUtils.hasLength(user.getUsername()) 
-				&& users.findByUsername(user.getUsername()) != null) {
-			result.rejectValue("username", "duplicate", "already exists");
-		}
-
 		if (result.hasErrors()) {
             user.setInternalPerson(internalPerson);
             model.put("user", user);
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
         } else {
-            internalPerson.addUser(user);
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			this.userService.save(user);
+        	User userDb = users.findByUsername(user.getUsername());
+        	userDb.setPassword(passwordEncoder.encode(user.getPassword()));
+        	internalPerson.addUser(userDb);
+            this.userService.save(userDb);
             return "redirect:/internalPersons/{internalPersonId}";
         }
     }

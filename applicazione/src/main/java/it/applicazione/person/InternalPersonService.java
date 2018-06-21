@@ -27,46 +27,8 @@ public class InternalPersonService {
 		return internalPerson;
 	}
 
-	public StringBuilder getAllPeopleAsCSV() {
-
-		Collection<InternalPerson> allPerson = internalPersonRepository.findAll();
-
-		StringBuilder allPeopleCSV = new StringBuilder();
-
-		allPeopleCSV.append("LastName,FirstName,Username,Email,Created,Role");
-
-		for (InternalPerson person : allPerson) {
-			List<User> users = person.getUsers();
-			for (User user : users) {
-				List<Role> roles = user.getRoles();
-				for (Role role : roles) {
-					allPeopleCSV
-							.append("\n" + person.getLastName() + "," + person.getFirstName() + "," + user.getUsername()
-									+ "," + user.getEmail() + "," + user.getCreated() + "," + role.getDescription());
-				}
-			}
-		}
-
-		return allPeopleCSV;
-
-	}
-
-	
 	public void save(InternalPerson internalPerson){
 		internalPersonRepository.save(internalPerson);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

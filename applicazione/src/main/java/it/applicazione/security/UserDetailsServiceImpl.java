@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		};
 		
 		
-		List<Role> roles = u.getRoles();
+		Set<Role> roles = u.getRoles();
 			
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 		

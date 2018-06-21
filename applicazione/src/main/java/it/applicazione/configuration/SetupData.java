@@ -18,6 +18,7 @@ import it.applicazione.person.InternalPersonService;
 import it.applicazione.person.Privilege;
 import it.applicazione.person.PrivilegeService;
 import it.applicazione.person.Role;
+import it.applicazione.person.RoleService;
 import it.applicazione.person.UserService;
 
 @Component
@@ -49,60 +50,45 @@ public class SetupData {
     
     @Autowired
     EsperimentoService esperimentoService;
+    
+    @Autowired
+    RoleService roleService;
 	
 	@PostConstruct
 	public void firstTime() {
 		
 		
-		
 		Collection<Privilege> privilegeList = privilegeService.findAll();
+		if(privilegeList.isEmpty())	initPrivileges();
 		
-		if(privilegeList.isEmpty()){
-			initPrivileges();
-		}
+		Role role = roleService.findByDescription(admin.toUpperCase());
+		if(role==null) initRole(admin);
 		
+		Role role2 = roleService.findByDescription("USER".toUpperCase());
+		if(role2==null) initRole("USER");
+		
+		Role role3 = roleService.findByDescription("BACKOFFICE".toUpperCase());
+		if(role3==null) initRole("BACKOFFICE");
 		
 		it.applicazione.person.User user = userService.cacheFindByUsernameFetchPersonAndRoles(admin.toLowerCase());
-		
-		if(user==null){
-	        initUsers(admin);
-		}
-		
+		if(user==null)initUsers(admin);
 		
 		user = userService.cacheFindByUsernameFetchPersonAndRoles("USER".toLowerCase());
-		
-		if(user==null){
-	        initUsers("USER");
-		}
+		if(user==null) initUsers("USER");
 		
 		user = userService.cacheFindByUsernameFetchPersonAndRoles("BACKOFFICE".toLowerCase());
-		
-		if(user==null){
-	        initUsers("BACKOFFICE");
-		}
-		
+		if(user==null) initUsers("BACKOFFICE");
 		
 		Collection<EsperimentoGroup> esperimentoGroupList = esperimentoGroupService.findByInfo("");
+		if(esperimentoGroupList.isEmpty()) initEsperimentoGroupList();
 		
-		if(esperimentoGroupList.isEmpty()){
-			initEsperimentoGroupList();
-		}
-		
-		
-
 	}
 	
 	
-	
-	
-	
-	
-	private void initUsers(String name) {
+	private void initRole(String name) {
 		
-		logger.warn("init user: "+name.toLowerCase());
 		Role role = new Role();
 		role.setDescription(name.toUpperCase());
-		
 		
 	    Privilege privilegeRole1 = privilegeService.findByName("ESPERIMENTOGROUP_READ");
 	    Privilege privilegeRole2 = privilegeService.findByName("ESPERIMENTOGROUP_WRITE");
@@ -111,6 +97,7 @@ public class SetupData {
 		
 	    if("BACKOFFICE".equals(name.toUpperCase())){
 	    	role.addPrivilege(privilegeRole1);
+	    	role.addPrivilege(privilegeRole4);
 	    }
 	    if("USER".equals(name.toUpperCase())){
 	    	role.addPrivilege(privilegeRole3);
@@ -120,7 +107,17 @@ public class SetupData {
 	    	role.addPrivilege(privilegeRole1);
 	    	role.addPrivilege(privilegeRole2);
 	    }
+	    roleService.save(role);
+	}
+	
+	
+	
+	private void initUsers(String name) {
+		
+		logger.warn("init user: "+name.toLowerCase());
+		
 	    
+		Role role = roleService.findByDescription(name.toUpperCase());
 		
 		it.applicazione.person.User user = new it.applicazione.person.User();
 		user.setUsername(name.toLowerCase());
@@ -164,14 +161,12 @@ public class SetupData {
 	    logger.warn("initPrivileges: ESPERIMENTOGROUP_WRITE");
 	    Privilege privilege2 = new Privilege("ESPERIMENTOGROUP_WRITE");
 	    privilegeService.save(privilege2);
-	    
 		logger.warn("initPrivileges: ESPERIMENTOGROUP_READ_SELF");
 	    Privilege privilege3 = new Privilege("ESPERIMENTOGROUP_READ_OWNED");
 	    privilegeService.save(privilege3);
 	    logger.warn("initPrivileges: ESPERIMENTOGROUP_WRITE_SELF");
 	    Privilege privilege4 = new Privilege("ESPERIMENTOGROUP_WRITE_OWNED");
 	    privilegeService.save(privilege4);
-	    
 	}
 	
 	
