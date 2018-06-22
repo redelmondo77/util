@@ -1,5 +1,7 @@
 package it.applicazione.esperimento.controller;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import it.applicazione.esperimento.model.Esperimento;
 import it.applicazione.esperimento.model.EsperimentoGroup;
+import it.applicazione.esperimento.model.State;
+import it.applicazione.esperimento.repository.StateRepository;
 import it.applicazione.esperimento.service.EmailServiceImpl;
 import it.applicazione.esperimento.service.EsperimentoGroupService;
 import it.applicazione.esperimento.service.EsperimentoService;
@@ -36,14 +40,16 @@ class EsperimentoController {
     @Autowired
     EsperimentoService esperimentoService;
     
+    @Autowired
+    StateRepository stateRepository;
+    
     @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/new", method = RequestMethod.GET)
     public String initCreationForm(ModelMap model
     		,@PathVariable("esperimentoGroupId") long esperimentoGroupId
     		) {
-    	
-    	Esperimento esperimento = new Esperimento();
-        model.put("esperimento", esperimento);
+    	model.put("states", stateRepository.findAll());
+        model.put("esperimento", new Esperimento());
         return "esperimento/createOrUpdateEsperimentoForm";
         
     }
@@ -51,75 +57,46 @@ class EsperimentoController {
     @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/new", method = RequestMethod.POST)
     public String processCreationForm(ModelMap model,
-    		@Valid Esperimento esperimento,
-    		BindingResult bindingResult
-    		,@PathVariable("esperimentoGroupId") long esperimentoGroupId
+    		@Valid Esperimento esperimento,BindingResult bindingResult,@PathVariable("esperimentoGroupId") long esperimentoGroupId
     		) {
-    	
-    	
-    	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
+    	//EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
     		
         if (bindingResult.hasErrors()) {
+        	model.put("states", stateRepository.findAll());
             model.put("esperimento", esperimento);
-            esperimento.setEsperimentoGroup(esperimentoGroup);
+            //esperimento.setEsperimentoGroup(esperimentoGroup);
             return "esperimento/createOrUpdateEsperimentoForm";
         }else{
-    		
-        	String ogg = "mail avvenuto inserimento";
-			
-        	String textGroup = esperimentoGroup.getId()
-        			+" "+esperimentoGroup.getInfo();
-        	
-        	
-        	String text = esperimento.getId()
-        			+" "+esperimento.getInfo()
-        			+" "+esperimento.getFase1()
-        			+" "+esperimento.getFase2();
-        	
-        	esperimento.setEsperimentoGroup(esperimentoGroup);
-        	
+        	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
+         	esperimento.setEsperimentoGroup(esperimentoGroup);
         	this.esperimentoService.save(esperimento);
-        	//emailService.sendSimpleMessage(ogg,textGroup+text);
-        	
+        	//emailService.sendSimpleMessage("oggetto: inserimento","testo: "+esperimento.getId()+esperimento.getInfo());
             return "redirect:/esperimentoGroup/{esperimentoGroupId}";
-            
         }
         
-    	}
+    }
         
     @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/{esperimentoId}/edit", method = RequestMethod.GET)
    	public String initUpdateForm(
    			@PathVariable("esperimentoId") long esperimentoId,
-   			@PathVariable("esperimentoGroupId") long esperimentoGroupId
-   			,ModelMap model) {
-
-    	//EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
-    	Esperimento esperimento = this.esperimentoService.findById(esperimentoId);
-    	//esperimento.setEsperimentoGroup(esperimentoGroup);
-   		model.put("esperimento", esperimento);
+   			@PathVariable("esperimentoGroupId") long esperimentoGroupId,ModelMap model) {
+    	model.put("states", stateRepository.findAll());
+   		model.put("esperimento", esperimentoService.findById(esperimentoId));
    		return "esperimento/createOrUpdateEsperimentoForm";
-       }
+    }
     
     
     @PreAuthorize(EsperimentoGroupController.hasWritePermissionEsperimentoGroup)
     @RequestMapping(value = "/esperimento/{esperimentoId}/edit", method = RequestMethod.POST)
-    public String processUpdateForm(
-    		@Valid Esperimento esperimento, BindingResult result, 
-    		ModelMap model,
-    		@PathVariable("esperimentoGroupId") long esperimentoGroupId,
-    		BindingResult bindingResult) {
-    	
-    	
-
-		if (result.hasErrors()) {
+    public String processUpdateForm(@Valid Esperimento esperimento, BindingResult result, 
+    		ModelMap model,@PathVariable("esperimentoGroupId") long esperimentoGroupId,BindingResult bindingResult) {
+    	if (result.hasErrors()) {
             model.put("esperimento", esperimento);
-            //esperimento.setEsperimentoGroup(esperimentoGroup);
+        	model.put("states", stateRepository.findAll());
             return "esperimento/createOrUpdateEsperimentoForm";
         } else {
-        	
-        	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
-        	
+         	EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
         	esperimentoGroup.addEsperimento(esperimento);
         	esperimento.setEsperimentoGroup(esperimentoGroup);
 			this.esperimentoService.save(esperimento);

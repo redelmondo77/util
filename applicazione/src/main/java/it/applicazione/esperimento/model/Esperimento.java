@@ -2,6 +2,7 @@
 package it.applicazione.esperimento.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +34,10 @@ public class Esperimento extends NamedEntity {
     @NotNull
     @Size(min=2, max=9)
     private String fase2;
+    
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "state_id")
+	private State state;
     
 
 	@ManyToOne
@@ -77,6 +82,16 @@ public class Esperimento extends NamedEntity {
 
 	public void setEsperimentoGroup(EsperimentoGroup esperimentoGroup) {
 		this.esperimentoGroup = esperimentoGroup;
+	}
+
+
+	public State getState() {
+		return state;
+	}
+
+
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	

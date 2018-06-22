@@ -48,6 +48,10 @@ id="add-esperimento-form" class="form-horizontal"
       <input type="hidden" name="id" th:value="*{id}" />
            
       <div class="has-feedback">
+      
+      perche si prende solo id ????  dovrebbe prendersi state o state.id
+      <input th:replace="~{fragments/selectField :: select ('State', 'state.id', ${states})}" />
+    
       <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
       <input  th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase1', 'fase1')}" />

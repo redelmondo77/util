@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import it.applicazione.esperimento.model.Esperimento;
 import it.applicazione.esperimento.model.EsperimentoGroup;
+import it.applicazione.esperimento.model.State;
+import it.applicazione.esperimento.repository.StateRepository;
 import it.applicazione.esperimento.service.EsperimentoGroupService;
 import it.applicazione.esperimento.service.EsperimentoService;
 import it.applicazione.person.InternalPerson;
@@ -53,6 +55,9 @@ public class SetupData {
     
     @Autowired
     RoleService roleService;
+    
+    @Autowired
+    StateRepository stateRepository;
 	
 	@PostConstruct
 	public void firstTime() {
@@ -172,6 +177,15 @@ public class SetupData {
 	
 	private void initEsperimentoGroupList(){
 		
+		
+		State sPrealpha = new State("Pre-alpha");
+		stateRepository.save(sPrealpha);
+		stateRepository.save(new State("Alpha"));
+		stateRepository.save(new State("Beta"));
+		stateRepository.save(new State("RC"));
+		stateRepository.save(new State("Release"));
+		
+		
 		EsperimentoGroup esperimentoGroup = new EsperimentoGroup();
 		logger.warn("initEsperimentoGroupList : test esperim 1");
 		esperimentoGroup.setInfo("testes12345678");
@@ -185,6 +199,7 @@ public class SetupData {
 		esperimento.setFase1("fa1info");
 		esperimento.setFase2("fainfo");
 		esperimento.setInfo("infoe");
+		esperimento.setState(sPrealpha);
 		esperimento.setEsperimentoGroup(esperimentoGroup);
 		
 		esperimentoGroup.addEsperimento(esperimento);
