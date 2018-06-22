@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		List<SimpleGrantedAuthority> authList = new ArrayList<>();
 		
 		for(Role role: roles){
-			String r = "ROLE_" + role.getDescription().toUpperCase();
+			String r = "ROLE_" + role.getName().toUpperCase();
 			authList.add(new SimpleGrantedAuthority(r));
 			
 			for (Privilege privilege : role.getPrivileges()) {

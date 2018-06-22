@@ -13,12 +13,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.applicazione.model.BaseEntity;
+import it.applicazione.model.NamedEntity;
 import it.applicazione.person.User;
 
 
 @Entity
 @Table(name = "esperimento")
-public class Esperimento extends BaseEntity {
+public class Esperimento extends NamedEntity {
 
     
     @NotNull

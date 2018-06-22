@@ -26,7 +26,7 @@
               <td th:text="${internalPerson.address}"/>
               <td th:text="${internalPerson.city}"/>
               <td th:text="${internalPerson.telephone}"/>
-              <td><span th:each="user : ${internalPerson.users}" th:text="${user.username} ">username</span></td>
+              <td><span th:each="user : ${internalPerson.users}" th:text="${user.username + ' '} ">username</span></td>
           </tr>
         </tbody>
     </table>

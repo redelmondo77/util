@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
@@ -46,7 +47,16 @@ public class User extends BaseEntity {
 	private String password;
 
 	@Column(name = "email")
+	//@Pattern(regexp = "^[A-Za-z0-9]*$" , message="ggg '${validation.email}'")
+	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+	        +"[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+	        +"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 	private String email;
+	
+	
+	
+	
+	
 
 	@Column(name = "created")
     @Temporal(TemporalType.DATE)

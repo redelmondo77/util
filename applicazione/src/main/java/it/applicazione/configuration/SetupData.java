@@ -61,13 +61,13 @@ public class SetupData {
 		Collection<Privilege> privilegeList = privilegeService.findAll();
 		if(privilegeList.isEmpty())	initPrivileges();
 		
-		Role role = roleService.findByDescription(admin.toUpperCase());
+		Role role = roleService.findByName(admin.toUpperCase());
 		if(role==null) initRole(admin);
 		
-		Role role2 = roleService.findByDescription("USER".toUpperCase());
+		Role role2 = roleService.findByName("USER".toUpperCase());
 		if(role2==null) initRole("USER");
 		
-		Role role3 = roleService.findByDescription("BACKOFFICE".toUpperCase());
+		Role role3 = roleService.findByName("BACKOFFICE".toUpperCase());
 		if(role3==null) initRole("BACKOFFICE");
 		
 		it.applicazione.person.User user = userService.cacheFindByUsernameFetchPersonAndRoles(admin.toLowerCase());
@@ -88,7 +88,7 @@ public class SetupData {
 	private void initRole(String name) {
 		
 		Role role = new Role();
-		role.setDescription(name.toUpperCase());
+		role.setName(name.toUpperCase());
 		
 	    Privilege privilegeRole1 = privilegeService.findByName("ESPERIMENTOGROUP_READ");
 	    Privilege privilegeRole2 = privilegeService.findByName("ESPERIMENTOGROUP_WRITE");
@@ -117,7 +117,7 @@ public class SetupData {
 		logger.warn("init user: "+name.toLowerCase());
 		
 	    
-		Role role = roleService.findByDescription(name.toUpperCase());
+		Role role = roleService.findByName(name.toUpperCase());
 		
 		it.applicazione.person.User user = new it.applicazione.person.User();
 		user.setUsername(name.toLowerCase());

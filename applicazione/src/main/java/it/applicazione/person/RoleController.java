@@ -34,7 +34,7 @@ class RoleController {
 		Role role = new Role();
 		model.put("role", role);
 		
-		return "users/createOrUpdateRoleForm";
+		return "users/addRoleForm";
     }
 
 
@@ -60,7 +60,7 @@ class RoleController {
 			model.put("roles", allRole);
 			model.put("user", user);
 			model.put("role", role);
-			return "users/createOrUpdateRoleForm";
+			return "users/addRoleForm";
         } else {
         	user.addRole(roleService.findById(role.getId()));
         	userService.save(user);

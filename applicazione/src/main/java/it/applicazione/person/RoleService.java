@@ -26,8 +26,8 @@ public class RoleService {
 	}
 	
 	@Cacheable("rolesCache")
-	public Role findByDescription(String description){
-		return roleRepository.findByDescription(description);
+	public Role findByName(String name){
+		return roleRepository.findByName(name);
 	}
 	
 	

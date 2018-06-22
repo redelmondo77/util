@@ -59,15 +59,13 @@ class UserController {
     @InitBinder("user")
     public void initUserBinder(WebDataBinder dataBinder) {
 
-		// Validator webMvcValidator = dataBinder.getValidators().get(0);
-
 		Validator userValidator = new UserValidator();
 
 		// custom validator only
-		dataBinder.setValidator(userValidator);
+		// dataBinder.setValidator(userValidator);
 
 		// webMvcValidator + userValidator
-		// dataBinder.addValidators(userValidator);
+		dataBinder.addValidators(userValidator);
     }
 
     @RequestMapping(value = "/users/new", method = RequestMethod.GET)

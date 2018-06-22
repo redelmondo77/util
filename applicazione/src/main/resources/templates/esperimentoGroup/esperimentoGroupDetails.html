@@ -27,6 +27,10 @@
 			<td th:text="*{id}" /></td>
 		</tr>
 		<tr>
+			<th>esperimento Group Name</th>
+			<td th:text="*{name}" /></td>
+		</tr>
+		<tr>
 			<th>esperimento Group Info</th>
 			<td th:text="*{info}" /></td>
 		</tr>
@@ -52,6 +56,7 @@
 		<thead>
         <tr>
             <th>Id</th>
+            <th>name</th>
             <th>info</th>
             <th>fase1</th>
             <th>fase2</th>
@@ -63,6 +68,7 @@
           <tr th:each="esperimento : ${esperimentoGroup.esperimentos}">
           
           	  <td th:text="${esperimento.id}"/>
+          	  <td th:text="${esperimento.name}"/>
           	  <td th:text="${esperimento.info}"/>
           	  <td th:text="${esperimento.fase1}"/>
           	  <td th:text="${esperimento.fase2}"/>

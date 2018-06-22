@@ -12,7 +12,7 @@ public interface RoleRepository extends Repository<Role, Integer> {
 
 	Role save(Role role) throws DataAccessException;
 
-	Role findByDescription(String description);
+	Role findByName(String name);
 	
 	Role findById(long id);
 	

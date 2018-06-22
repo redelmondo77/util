@@ -2,11 +2,22 @@ package it.applicazione.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
-    @Column(name = "name")
+    public NamedEntity(String name) {
+		super();
+		this.name = name;
+	}
+    
+ 	public NamedEntity() {
+		super();
+	}
+
+	@Column(name = "name")
+	@Size(min=3, max=100)
     private String name;
 
     public String getName() {

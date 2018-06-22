@@ -3,32 +3,21 @@ package it.applicazione.person;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
-import it.applicazione.model.BaseEntity;
+import it.applicazione.model.NamedEntity;
 
 @Entity
 @Table(name = "privileges")
-public class Privilege extends BaseEntity {
+public class Privilege extends NamedEntity {
 	
-    @Column(name = "name",nullable = false, unique = true)
-    private String name;
-    
-   	public Privilege(String name) {
-		super();
-		this.name = name;
-	}
 	public Privilege() {
 		super();
 	}
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
+	public Privilege(String name) {
+		super(name);
 	}
-    
-    
+   
 	
-
 }

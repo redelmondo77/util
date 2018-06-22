@@ -1,6 +1,4 @@
 package it.applicazione.model;
-
-import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +13,19 @@ public class OwnedEntity extends NamedEntity implements OwnedEntityInterface {
 	@JoinColumn(name = "person_id")
 	private InternalPerson internalPerson;
 	
+	public OwnedEntity() {
+		super();
+	}
+
+	public OwnedEntity(String name) {
+		super(name);
+	}
+
+	public OwnedEntity(String name, InternalPerson internalPerson) {
+		super(name);
+		this.internalPerson = internalPerson;
+	}
+
 	public InternalPerson getInternalPerson() {
 		return internalPerson;
 	}

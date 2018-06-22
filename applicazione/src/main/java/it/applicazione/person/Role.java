@@ -14,15 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import it.applicazione.model.BaseEntity;
+import it.applicazione.model.NamedEntity;
 
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity {
-
-	@NotNull
-    @Column(name = "description")
-    private String description;
+public class Role extends NamedEntity {
 
     @ManyToMany(fetch = FetchType.EAGER) 
     @JoinTable(name = "roles_privileges", 
@@ -51,12 +48,6 @@ public class Role extends BaseEntity {
 	public void setPrivileges(Set<Privilege> privileges) {
 		this.privileges = privileges;
 	}
-	public String getDescription() {
-		return description;
-	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 }

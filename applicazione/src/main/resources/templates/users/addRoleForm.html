@@ -28,7 +28,7 @@
     
     <div class="has-feedback">
     
-    <!-- <input th:replace="~{fragments/inputField :: input ('Role', 'description')}" /> -->
+    <!-- <input th:replace="~{fragments/inputField :: input ('Role', 'name')}" /> -->
     <input th:replace="~{fragments/selectField :: select ('Role', 'id', ${roles})}" />
     </div>
 	<div class="form-group">
@@ -50,7 +50,7 @@
       <th>Roles</th>
     </tr>
     <tr th:each="role : ${user.roles}">
-      <td th:text=" ${role.description}" /></td>
+      <td th:text=" ${role.name}" /></td>
     </tr>
   </table>
 

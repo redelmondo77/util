@@ -36,26 +36,12 @@ class EsperimentoGroupController {
 
 	
 	private static final String VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM = "esperimentoGroup/createOrUpdateEsperimentoGroupForm";
+	private static final String e = "it.applicazione.esperimento.model.EsperimentoGroup";
+	private static final String ePathId = "esperimentoGroupId";
 	
-
-	public static final String  preInvocationAuthCheck =
-	 "hasRole('ADMIN') " 
-	 +" or "+ 
-	 " ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#esperimentoGroupId) )";
-	
-	 public static final String hasReadPermissionEsperimentoGroup = 
-	 "( hasRole('ADMIN') )" 
-	 +" or "+ 
-	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','read_owned_privilege') )" 
-	 +" or "+
-	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','read_privilege') )";
-	  
-	 public static final String hasWritePermissionEsperimentoGroup = 
-	 "( hasRole('ADMIN') )" 
-	 +" or "+ 
-	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_owned_privilege') )" 
-	 +" or "+
-	 "( hasPermission(#esperimentoGroupId,'it.applicazione.esperimento.model.EsperimentoGroup','write_privilege') )";
+	//public static final String preInvocationAuthCheck = "hasRole('ADMIN') or ( hasRole('USER') and @myEsperimentoSecurityService.hasAccess(#"+ePathId+") )";
+	public static final String hasReadPermissionEsperimentoGroup = "hasRole('ADMIN') or hasPermission(#"+ePathId+",'"+e+"','read_owned_privilege') or hasPermission(#"+ePathId+",'"+e+"','read_privilege')";
+	public static final String hasWritePermissionEsperimentoGroup = "hasRole('ADMIN') or hasPermission(#"+ePathId+",'"+e+"','write_owned_privilege') or hasPermission(#"+ePathId+",'"+e+"','write_privilege')";
 			
 	
 	@Autowired
@@ -71,8 +57,8 @@ class EsperimentoGroupController {
 
     
     @PreAuthorize(hasReadPermissionEsperimentoGroup)
-	@RequestMapping("/esperimentoGroup/{esperimentoGroupId}")
-	public ModelAndView showInternalPerson(@PathVariable("esperimentoGroupId") long esperimentoGroupId) {
+	@RequestMapping("/esperimentoGroup/{"+ePathId+"}")
+	public ModelAndView showInternalPerson(@PathVariable(ePathId) long esperimentoGroupId) {
 		ModelAndView mav = new ModelAndView("esperimentoGroup/esperimentoGroupDetails");
 		mav.addObject("esperimentoGroup",esperimentoGroupService.findById(esperimentoGroupId));
 		InternalPerson internalPerson = userService.cacheFindByUsernameFetchPersonAndRoles(SecurityContextHolder.getContext().getAuthentication().getName()).getInternalPerson();
@@ -165,23 +151,23 @@ class EsperimentoGroupController {
     }
 
 	@PreAuthorize(hasWritePermissionEsperimentoGroup)
-	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.GET)
-	public String initUpdateEsperimentoGroupForm(@PathVariable("esperimentoGroupId") long esperimentoGroupId, Model model) {
+	@RequestMapping(value = "/esperimentoGroup/{"+ePathId+"}/edit", method = RequestMethod.GET)
+	public String initUpdateEsperimentoGroupForm(@PathVariable(ePathId) long esperimentoGroupId, Model model) {
 		EsperimentoGroup esperimentoGroup = this.esperimentoGroupService.findById(esperimentoGroupId);
 		model.addAttribute(esperimentoGroup);
 		return VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM;
     }
 
 	@PreAuthorize(hasWritePermissionEsperimentoGroup)
-	@RequestMapping(value = "/esperimentoGroup/{esperimentoGroupId}/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/esperimentoGroup/{"+ePathId+"}/edit", method = RequestMethod.POST)
 	public String processUpdateInternalPersonForm(@Valid EsperimentoGroup esperimentoGroup, BindingResult result,
-			@PathVariable("esperimentoGroupId") long internalPersonId) {
+			@PathVariable(ePathId) long internalPersonId) {
         if (result.hasErrors()) {
 			return VIEWS_EsperimentoGroup_CREATE_OR_UPDATE_FORM;
         } else {
         	esperimentoGroup.setId(internalPersonId);
 			this.esperimentoGroupService.save(esperimentoGroup);
-			return "redirect:/esperimentoGroup/{esperimentoGroupId}";
+			return "redirect:/esperimentoGroup/{"+ePathId+"}";
         }
     }
 

@@ -58,7 +58,7 @@
 						</tr>
 					</thead>
 					<tr th:each="role : ${user.roles}">
-						<td th:text="${role?.description}"></td>
+						<td th:text="${role?.name}"></td>
 					</tr>
 					<tr>
 						<td><a

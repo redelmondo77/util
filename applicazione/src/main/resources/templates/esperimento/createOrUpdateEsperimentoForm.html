@@ -48,6 +48,7 @@ id="add-esperimento-form" class="form-horizontal"
       <input type="hidden" name="id" th:value="*{id}" />
            
       <div class="has-feedback">
+      <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
       <input  th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase1', 'fase1')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase2', 'fase2')}" />

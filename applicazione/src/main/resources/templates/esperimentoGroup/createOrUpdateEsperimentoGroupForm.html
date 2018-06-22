@@ -17,8 +17,8 @@
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
       -->
        
-      <input
-        th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
+      <input th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
+      <input th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
 
     </div>
     
