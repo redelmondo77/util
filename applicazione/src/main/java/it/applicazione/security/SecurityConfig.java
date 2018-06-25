@@ -55,18 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 	
-	private AuthenticationProvider authenticationProvider;
-
-    @Autowired
-    @Qualifier("daoAuthenticationProvider")
-    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
-    }
-	
-	
-    @Autowired
+   @Autowired
     public void configureAuthManager(AuthenticationManagerBuilder authenticationManagerBuilder){
-        authenticationManagerBuilder.authenticationProvider(authenticationProvider);
+        authenticationManagerBuilder.authenticationProvider( daoAuthenticationProvider());
     }
 	
 	@Override

@@ -45,7 +45,7 @@ public class User extends BaseEntity {
 
 	@Column(name = "password")
 	@NotNull
-	@Size(min = 4, max = 10)
+	@Size(min = 4, max = 80)
 	private String password;
 
 	@Column(name = "email")
