@@ -15,14 +15,17 @@
         </div>
        
         
-<form class="form-horizontal" id="add-internalPerson-form" method="post">
-
+<form  class="form-horizontal" id="add-internalPerson-form" method="post">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+       
      
      <div class="form-group">
         <div class="control-group" id="Username">
         <label class="col-sm-2 control-label" th:text="#{username}" >Username</label>
         <div class="col-sm-10">
           <input class="form-control" type="text" id="username" name="username" value="" />
+     
+          
      </div>
      </div>
      </div>

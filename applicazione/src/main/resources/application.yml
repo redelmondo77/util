@@ -6,6 +6,7 @@ logging:
     root: error
     org.springframework: warn
     it.applicazione: info
+    org.springframework.security.web.csrf: debug
   file: C:/dev/home/applicazione/myapplication.log
 
 

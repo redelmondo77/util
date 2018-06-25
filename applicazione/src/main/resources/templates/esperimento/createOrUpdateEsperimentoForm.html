@@ -11,11 +11,9 @@
     
     
 <!-- th:action="@{/esperimento/new}"  -->    
-<form action="#" 
-th:object="${esperimento}" method="post"
-id="add-esperimento-form" class="form-horizontal"
->
-
+<form action="#" th:object="${esperimento}" method="post" id="add-esperimento-form" class="form-horizontal">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+       
     	<!-- 
     	<p>Id: <input type="text" th:field="*{id}" />
     	<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Name Error</span>
@@ -49,10 +47,8 @@ id="add-esperimento-form" class="form-horizontal"
            
       <div class="has-feedback">
       
-      perche si prende solo id ????  dovrebbe prendersi state o state.id
       <input th:replace="~{fragments/selectField :: select ('State', 'state.id', ${states})}" />
-    
-      <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
+       <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
       <input  th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase1', 'fase1')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase2', 'fase2')}" />
@@ -78,11 +74,6 @@ id="add-esperimento-form" class="form-horizontal"
 </form>
 
 
-
-
-
-
-      
-  </div>
+</div>
 
 </div></body></html>

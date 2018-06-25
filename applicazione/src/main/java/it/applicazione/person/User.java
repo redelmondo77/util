@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
@@ -39,25 +40,20 @@ public class User extends BaseEntity {
 
 	@Column(name = "username", unique = true)
 	@NotNull
+	@Size(min = 4, max = 10)
 	private String username;
 
 	@Column(name = "password")
 	@NotNull
-	// @Size(min = 4, max = 10)
+	@Size(min = 4, max = 10)
 	private String password;
 
 	@Column(name = "email")
-	//@Pattern(regexp = "^[A-Za-z0-9]*$" , message="ggg '${validation.email}'")
 	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
 	        +"[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
 	        +"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 	private String email;
 	
-	
-	
-	
-	
-
 	@Column(name = "created")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -67,11 +63,7 @@ public class User extends BaseEntity {
 	@JoinColumn(name = "person_id")
 	private InternalPerson internalPerson;
 
-	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-	//private Set<Role> roles = new LinkedHashSet<>();
 
-
-	
     @ManyToMany(fetch = FetchType.EAGER) 
     @JoinTable(name = "users_privileges", 
     joinColumns = 

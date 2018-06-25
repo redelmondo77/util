@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
   <form>
-    <th:block th:fragment="select (label, fieldname, selectfield, allitems)">
+    <th:block th:fragment="checkbox (label, selectfield, allitems)">
       <div th:with="valid=${!#fields.hasErrors(selectfield)}"
         th:class="${'form-group' + (valid ? '' : ' has-error')}"
         class="form-group">
@@ -12,27 +12,20 @@
          
           <ul th:each="item : ${allitems}">
           <li>
-            <label class="col-sm-2" th:text="${item.name}">Label</label>
- 		    <input type="checkbox" 
-            th:value="${item.id}"
-      		th:field="*{__${selectfield}__}"
-            />
+           <label class="col-sm-2" th:text="${item.name}">Label</label>
+ 		   <input type="checkbox" th:value="${item.id}" th:field="*{__${selectfield}__}"/>
           </li>
           </ul>
-
            
-           <span th:if="${valid}"
-            class="form-control-feedback"
-            aria-hidden="true"></span>
-            
+          <span th:if="${valid}" class="form-control-feedback" aria-hidden="true"></span>
+          
           <th:block th:if="${!valid}">
-            <span
-              class="glyphicon glyphicon-remove form-control-feedback"
-              aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             <span class="help-inline" th:errors="*{__${selectfield}__}">Error</span>
           </th:block>
           
         </div>
+        
       </div>
     </th:block>
   </form>

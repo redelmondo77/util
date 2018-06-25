@@ -92,8 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//Since the H2 database console runs inside a frame, you need to enable this in in Spring Security.
 		if(h2Console){
 			logger.warn("console h2 attiva, csrf protection disabled");
-			http.csrf().disable();
-			http.headers().frameOptions().disable();
+			http.csrf().ignoringAntMatchers("/h2","/h2/**");
+			http.headers().frameOptions().sameOrigin();
 		}else{
 			logger.warn("console h2 disabled");
 		}
