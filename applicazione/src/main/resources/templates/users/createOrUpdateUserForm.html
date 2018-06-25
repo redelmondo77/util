@@ -37,6 +37,15 @@
 	 <input
         th:replace="~{fragments/inputField :: input ('Email', 'email')}" />
 		
+		
+
+          
+		
+ 	  <input th:replace="~{fragments/checkboxField :: select ('Role','roles', 'roleids' , ${allroles} )}" />
+    
+	 
+
+
 
 
     </div>

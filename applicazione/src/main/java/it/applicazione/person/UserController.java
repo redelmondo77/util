@@ -2,11 +2,13 @@ package it.applicazione.person;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Collection;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -32,6 +34,9 @@ class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RoleService roleService;
 
     @Autowired
     public UserController(UserRepository users, InternalPersonRepository internalPersons) {
@@ -70,7 +75,12 @@ class UserController {
 
     @RequestMapping(value = "/users/new", method = RequestMethod.GET)
     public String initCreationForm(InternalPerson internalPerson, ModelMap model) {
-		User user = new User();
+		
+    	
+    	Collection<Role> allRole = roleService.findAll();
+		model.put("allroles", allRole);
+    	
+    	User user = new User();
 		user.setInternalPerson(internalPerson);
         model.put("user", user);
 		return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
@@ -86,6 +96,10 @@ class UserController {
 		
 		}
         if (result.hasErrors()) {
+        	
+        	Collection<Role> allRole = roleService.findAll();
+			model.put("allroles", allRole);
+        	
             model.put("user", user);
             user.setInternalPerson(internalPerson);
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
@@ -100,6 +114,9 @@ class UserController {
     @RequestMapping(value = "/users/{userId}/edit", method = RequestMethod.GET)
 	public String initUpdateForm(InternalPerson internalPerson, @PathVariable("userId") long userId, ModelMap model) {
 
+    	Collection<Role> allRole = roleService.findAll();
+		model.put("allroles", allRole);
+    	
 		User user = this.users.findById(userId);
 		user.setInternalPerson(internalPerson);
 		user.setPassword(null);
@@ -110,14 +127,21 @@ class UserController {
     @RequestMapping(value = "/users/{userId}/edit", method = RequestMethod.POST)
     public String processUpdateForm(@Valid User user, BindingResult result, InternalPerson internalPerson, ModelMap model) {
 
-		if (result.hasErrors()) {
+    	
+    	if( CollectionUtils.isEmpty(user.getRoles()) ){
+    		result.rejectValue("roleids", "UserController.role.missing", "non hai messo ruolo");
+    	}
+    	if (result.hasErrors()) {
+			Collection<Role> allRole = roleService.findAll();
+			model.put("allroles", allRole);
             user.setInternalPerson(internalPerson);
             model.put("user", user);
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
         } else {
         	User userDb = users.findByUsername(user.getUsername());
         	userDb.setPassword(passwordEncoder.encode(user.getPassword()));
-        	internalPerson.addUser(userDb);
+        	userDb.setRoles(user.getRoles());
+       	internalPerson.addUser(userDb);
             this.userService.save(userDb);
             return "redirect:/internalPersons/{internalPersonId}";
         }

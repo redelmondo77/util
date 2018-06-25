@@ -30,7 +30,7 @@ public class RoleService {
 		return roleRepository.findByName(name);
 	}
 	
-	
+	@Cacheable("allrolesCache")
 	public Collection<Role> findAll(){
 		return roleRepository.findAll();
 	}

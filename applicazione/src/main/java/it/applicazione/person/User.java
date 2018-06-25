@@ -124,39 +124,21 @@ public class User extends BaseEntity {
 		this.roles = roles;
 	}
     
-    
-	
-	/*
-	 
-	protected Set<Role> getRolesInternal() {
-		if (this.roles == null) {
-			this.roles = new HashSet<>();
-		}
-		return this.roles;
+    public List<Long> getRoleids() {
+    	List<Long> l = new ArrayList<Long>(); 
+    	if(roles==null)return null;
+    	for(Role role: roles){
+    		l.add(role.getId());
+    	}
+		return l;
 	}
-
-	protected void setRolesInternal(Set<Role> Roles) {
-		this.roles = Roles;
+    public void setRoleids(List<Long> l) {
+    	for(Long id: l){
+    		Role role = new Role();
+        	role.setId(id);
+    		addRole(role);
+    	}
 	}
-	
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-	
-	public List<Role> getRoles() {
-		List<Role> sortedRoles = new ArrayList<>(getRolesInternal());
-		PropertyComparator.sort(sortedRoles, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedRoles);
-	}
-
-	public void addRole(Role role) {
-		getRolesInternal().add(role);
-		role.setUser(this);
-	}
-	
-	*/
-
-
 
 	public String getUsername() {
 		return username;

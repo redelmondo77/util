@@ -63,6 +63,14 @@ https://www.w3schools.com/Bootstrap/bootstrap_ref_comp_glyphs.asp
 
 
 
+Thymeleaf
+https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html
+
+    ${...} : Variable expressions.
+    *{...} : Selection expressions.
+    #{...} : Message (i18n) expressions.
+    @{...} : Link (URL) expressions.
+    ~{...} : Fragment expressions.
 
 
 
