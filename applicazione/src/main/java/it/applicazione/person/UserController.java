@@ -105,7 +105,7 @@ class UserController {
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
         } else {
 			user.setInternalPerson(internalPerson);
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
 			this.userService.save(user);
             return "redirect:/internalPersons/{internalPersonId}";
         }
@@ -137,9 +137,9 @@ class UserController {
             user.setInternalPerson(internalPerson);
             model.put("user", user);
 			return VIEWS_USERS_CREATE_OR_UPDATE_FORM;
-        } else {
+        } else { //kofficeE1#
         	User userDb = users.findByUsername(user.getUsername());
-        	userDb.setPassword(passwordEncoder.encode(user.getPassword()));
+        	userDb.setPasswordHash(passwordEncoder.encode(user.getPassword()));
         	userDb.setRoles(user.getRoles());
        	internalPerson.addUser(userDb);
             this.userService.save(userDb);

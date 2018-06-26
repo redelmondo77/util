@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -43,10 +44,12 @@ public class User extends BaseEntity {
 	@Size(min = 4, max = 10)
 	private String username;
 
-	@Column(name = "password")
-	@NotNull
-	@Size(min = 4, max = 80)
+	@Transient
 	private String password;
+	
+	@Column(name = "passwordHash")
+	@Size(min = 60, max = 60)
+	private String passwordHash;
 
 	@Column(name = "email")
 	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
@@ -170,6 +173,12 @@ public class User extends BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 }

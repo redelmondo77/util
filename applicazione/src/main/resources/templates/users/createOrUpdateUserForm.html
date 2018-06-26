@@ -29,7 +29,7 @@
           <label class="control-label" th:text="${user.internalPerson?.firstName + ', ' + user.internalPerson?.lastName}" >nnnn</label>
         </div>
       </div>
-     <input th:replace="~{fragments/inputField :: input ('Username', 'username')}" />
+     <input th:replace="~{fragments/inputReadonlyField :: input ('Username', 'username')}" />
      <input th:replace="~{fragments/inputField :: input ('Password', 'password')}" />
 	 <input th:replace="~{fragments/inputField :: input ('Email', 'email')}" />
 	 <input th:replace="~{fragments/checkboxField :: checkbox ('Role', 'roleids' , ${allroles} )}" />

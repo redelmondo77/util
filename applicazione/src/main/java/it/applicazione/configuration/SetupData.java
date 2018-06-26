@@ -126,7 +126,7 @@ public class SetupData {
 		
 		it.applicazione.person.User user = new it.applicazione.person.User();
 		user.setUsername(name.toLowerCase());
-		user.setPassword(passwordEncoder.encode(adminPwd));
+		user.setPasswordHash(passwordEncoder.encode(adminPwd));
 		user.setEmail(name.toLowerCase()+"@noreplay.it");
 		user.addRole(role);
 		
