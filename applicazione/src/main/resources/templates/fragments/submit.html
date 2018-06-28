@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <form> 
+    <th:block th:fragment="submit (label)">
+    
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" th:text="${label}">Label</button>
+      </div>
+    </div>
+    
+    
+</th:block>
+</form>
+</body>
+</html>

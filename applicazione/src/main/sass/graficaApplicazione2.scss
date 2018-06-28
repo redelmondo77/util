@@ -1,0 +1,30 @@
+
+@import "bootstrap-4.0.0/scss/bootstrap";
+
+
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.footer {
+  margin-top: 20px;
+}
+
+
+div.form-group.has-error span.help-inline{
+    color: #a94442;
+}
+
+ 
+ 
+div.input-group span.fas{
+ right: .7em;
+ position: absolute;
+} 
+
+ 

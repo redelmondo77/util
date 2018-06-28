@@ -25,14 +25,15 @@ md C:\dev\home\applicazione\tomcat
 md C:\dev\home\applicazione\tomcatLogging
 echo #HOMECONFIG  > C:\dev\home\applicazione\config\application.yml
 
-
 override application properties  with  application.yml
+
 
 
 WEB TEST
 
 run as > spring boot app
 http://localhost/applicazione
+
 
 
 DEPLOY
@@ -43,27 +44,27 @@ run as>maven install
 
 copy C:\dev\.m2\repository\it\applicazione\applicazione\0.0.1-SNAPSHOT\applicazione-0.0.1-SNAPSHOT.war C:\dev\home\applicazione
 
+
+
 RUN
 
 java -jar C:\dev\home\applicazione\applicazione-0.0.1-SNAPSHOT.war --spring.config.location=C:/dev/home/applicazione/config/application.yml
 
+
+
 DB CONSOLE 
-
-
 
 http://localhost/applicazione/h2
 
+
+
+
 LINKS
 
-https://getbootstrap.com/docs/3.3/getting-started/
-https://themes.getbootstrap.com/
-https://startbootstrap.com/template-categories/all/
-https://github.com/spring-projects/spring-petclinic
-https://www.w3schools.com/Bootstrap/bootstrap_ref_comp_glyphs.asp
+https://getbootstrap.com/docs/4.0/
 
+https://fontawesome.com/icons?d=gallery
 
-
-Thymeleaf
 https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html
 
     ${...} : Variable expressions.
@@ -72,5 +73,10 @@ https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html
     @{...} : Link (URL) expressions.
     ~{...} : Fragment expressions.
 
+use scss
+https://getbootstrap.com/docs/4.0/getting-started/theming/
+https://github.com/warmuuh/libsass-maven-plugin
+https://www.w3schools.com/html/html_layout.asp
+https://www.w3schools.com/bootstrap/default.asp
 
 

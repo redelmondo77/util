@@ -14,66 +14,23 @@
 <form action="#" th:object="${esperimento}" method="post" id="add-esperimento-form" class="form-horizontal">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
        
-    	<!-- 
-    	<p>Id: <input type="text" th:field="*{id}" />
-    	<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Name Error</span>
-    	</p>
-    	
-    	<p>info: <input type="text" th:field="*{info}" />
-        <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}">Name Error</span>
-        </p>
-        
-        <p>fase1: <input type="text" th:field="*{fase1}" />
-        <span th:if="${#fields.hasErrors('fase1')}" th:errors="*{fase1}">Name Error</span>
-        </p>
-        
-        <p>fase2: <input type="text" th:field="*{fase2}" />
-        <span th:if="${#fields.hasErrors('fase2')}" th:errors="*{fase2}">Name Error</span>
-        </p>
-        
-        <p>
-        <input type="submit" value="Submit" /> 
-        <input type="reset" value="Reset" />
-        </p>
-    	
-       -->
-    	
-      <!-- conflitto con h2 console
-      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-      -->
-       
-       
-      <input type="hidden" name="id" th:value="*{id}" />
+<input type="hidden" name="id" th:value="*{id}" />
            
-      <div class="has-feedback">
-      
       <input th:replace="~{fragments/selectField :: select ('State', 'state.id', ${states})}" />
-       <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
+      <input  th:replace="~{fragments/inputField :: input ('Name', 'name')}" />
       <input  th:replace="~{fragments/inputField :: input ('Info', 'info')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase1', 'fase1')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase2', 'fase2')}" />
-      </div>
-    	
-    	
+
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-          
-          
-        <button
-          th:with="text=${esperimento['new']} ? 'Add Esperimento' : 'Update Esperimento'"
+        <button th:with="text=${esperimento['new']} ? 'Add Esperimento' : 'Update Esperimento'"
           class="btn btn-default" type="submit" th:text="${text}">Add Esperimento</button> 
-          
-          <button
-           th:with="text=${'reset'}"
-          class="btn btn-default" type="reset" th:text="${text}">reset</button>
+        <button th:with="text=${'reset'}" class="btn btn-default" type="reset" th:text="${text}">reset</button>
       </div>
     </div>
-    
-
 
 </form>
 
-
 </div>
-
-</div></body></html>
+</body></html>
