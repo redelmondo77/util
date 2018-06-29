@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <form> 
+   <th:block th:fragment="input (label, name)">
+      
+   <div class="form-group row" >
+   
+   <div class="col-2">
+    <label  th:text="${label}" class="col-form-label">Label</label>
+   </div>
+   
+   <div class="col-10">
+
+   <div class="input-group">
+    <input  class="form-control" type="text" th:name="${name}" />
+   </div>
+    
+   </div>
+      
+   </div>
+   
+   </th:block>
+</form>
+</body>
+</html>

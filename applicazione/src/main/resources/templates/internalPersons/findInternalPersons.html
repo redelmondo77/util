@@ -5,18 +5,23 @@
 
 
   <h2>Find InternalPersons</h2>
-  <form th:object="${internalPerson}" th:action="@{/internalPersons}" method="get" 
+  <form class="col-12" th:object="${internalPerson}" th:action="@{/internalPersons}" method="get" 
   id="search-internalPerson-form">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
          
-  <input th:replace="~{fragments/inputFieldSimple :: input ('Last Name', 'lastName')}" />
-  <input th:replace="~{fragments/submit :: submit ('Find InternalPerson')}" />
+  <input th:replace="~{fragments/inputFieldSimple :: input ('Last&nbsp;Name', 'lastName')}" />
+  <input th:replace="~{fragments/find :: submit ('Find InternalPerson')}" />
+
+   <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <a class="btn btn-primary" role="button" th:href="@{/internalPersons/new}">Add InternalPerson</a>
+         </div>
+    </div>
+
+
   
   </form>
-  
-  <div class="col-sm-offset-2 col-sm-10">
-  	<a class="btn btn-primary" role="button" th:href="@{/internalPersons/new}">Add InternalPerson</a>
-  </div>
+ 
 
 
 </div></body></html>

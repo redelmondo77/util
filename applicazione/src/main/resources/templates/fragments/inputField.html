@@ -5,7 +5,7 @@
       
    <div th:with="valid=${!#fields.hasErrors(name)}" class="form-group row" >
    
-   <div class="col-2 ">
+   <div class="col-2">
     <label  th:text="${label}"  th:class="${'col-form-label ' + (valid ? '' : ' text-danger')}"  >Label</label>
    </div>
    

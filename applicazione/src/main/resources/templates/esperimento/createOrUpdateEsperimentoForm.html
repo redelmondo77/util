@@ -11,7 +11,7 @@
     
     
 <!-- th:action="@{/esperimento/new}"  -->    
-<form action="#" th:object="${esperimento}" method="post" id="add-esperimento-form" class="form-horizontal">
+<form class="col-12" action="#" th:object="${esperimento}" method="post" id="add-esperimento-form">
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
        
 <input type="hidden" name="id" th:value="*{id}" />
@@ -22,14 +22,13 @@
       <input  th:replace="~{fragments/inputField :: input ('Fase1', 'fase1')}" />
       <input  th:replace="~{fragments/inputField :: input ('Fase2', 'fase2')}" />
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button th:with="text=${esperimento['new']} ? 'Add Esperimento' : 'Update Esperimento'"
-          class="btn btn-default" type="submit" th:text="${text}">Add Esperimento</button> 
-        <button th:with="text=${'reset'}" class="btn btn-default" type="reset" th:text="${text}">reset</button>
-      </div>
-    </div>
-
+      <th:block th:if="${esperimento['new']}">
+       <input th:replace="~{fragments/submit :: submit ('Add Esperimento')}" />
+      </th:block>
+      <th:block th:if="!${esperimento['new']}">
+       <input th:replace="~{fragments/submit :: submit ('Update Esperimento')}" />
+      </th:block>
+ 
 </form>
 
 </div>

@@ -6,7 +6,7 @@
 
   <h2>Find esperimentoGroup</h2>
 
-  <form th:object="${esperimentoGroup}" th:action="@{/esperimentoGroup}" method="get" class="form-horizontal" id="search-esperimentoGroup-form">
+  <form class="col-12" th:object="${esperimentoGroup}" th:action="@{/esperimentoGroup}" method="get" id="search-esperimentoGroup-form">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
          
   <input th:replace="~{fragments/inputFieldSimple :: input ('Info', 'info')}" />
